@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FraudGuard AI - E-Commerce Fraud Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="noise-overlay"></div>
+  <div class="grid-overlay"></div>
+
+  <header class="header">
+    <div class="logo">
+      <span class="logo-mark">◎</span>
+      <span class="logo-text">FraudGuard<span>AI</span></span>
+    </div>
+    <nav class="nav">
+      <a href="#form-section">Check Transaction</a>
+      <a href="#stats-section">Session Log</a>
+      <a href="#about-section">About</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Manthan AI · 2025 · E-Commerce Fraud</p>
+        <h1>Realtime <span style="color: black;">Fraud Detection</span> Console</h1>
+        <p class="hero-sub">
+          Simulate an AI-powered risk engine for e-commerce payments. Enter transaction
+          attributes, send them to the backend model, and visualise fraud probability instantly.
+        </p>
+        <div class="hero-actions">
+          <a href="#form-section" class="btn primary">Run Fraud Check</a>
+          <a href="#stats-section" class="btn outline">View Session Log</a>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">XGBoost</span>
+          <span class="tag">Imbalanced Learning</span>
+          <span class="tag">F1 Optimised</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <span class="chip-live"></span>
+          <span class="hero-card-title">Model Telemetry</span>
+          <span class="hero-card-pill">Demo</span>
+        </div>
+        <div class="metric-grid">
+          <div class="metric">
+            <span class="metric-label">Total Transactions</span>
+            <span class="metric-value" id="metric-total-tx">10,000</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Fraud Rate</span>
+            <span class="metric-value accent" id="metric-fraud-rate">1.0%</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Today’s Alerts</span>
+            <span class="metric-value" id="metric-alerts">37</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Target F1-Score</span>
+            <span class="metric-value" id="metric-f1-score">0.82</span>
+          </div>
+        </div>
+        <div class="hero-foot">
+          <div class="hero-foot-item">
+            <span class="dot dot-good"></span>
+            <span>Model loaded</span>
+          </div>
+          <div class="hero-foot-item">
+            <span class="dot dot-warn"></span>
+            <span>F1-tuned threshold</span>
+          </div>
+        </div>
+        <p class="metric-note">
+          These values are static placeholders.
+      </div>
+    </section>
+
+    <!-- Form + Result Section -->
+    <section class="card form-section" id="form-section">
+      <div class="form-wrapper">
+        <div class="card-header">
+          <h2>Transaction Risk Check</h2>
+        </div>
+
+        <form id="fraud-form" class="form-grid">
+          <!-- Amount & Time -->
+          <div class="form-group">
+            <label for="tx_amount">Transaction Amount (₹)</label>
+            <input type="number" id="tx_amount" name="tx_amount" min="0" step="0.01" required />
+          </div>
+
+          <div class="form-group">
+            <label for="hour_of_day">Hour of Day (0–23)</label>
+            <input type="number" id="hour_of_day" name="hour_of_day" min="0" max="23" required />
+          </div>
+
+          <div class="form-group">
+            <label for="day_of_week">Day of Week</label>
+            <select id="day_of_week" name="day_of_week" required>
+              <option value="" disabled selected>Select day</option>
+              <option value="0">Monday</option>
+              <option value="1">Tuesday</option>
+              <option value="2">Wednesday</option>
+              <option value="3">Thursday</option>
+              <option value="4">Friday</option>
+              <option value="5">Saturday</option>
+              <option value="6">Sunday</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="month">Month</label>
+            <select id="month" name="month" required>
+              <option value="" disabled selected>Select month</option>
+              <option value="1">Jan</option>
+              <option value="2">Feb</option>
+              <option value="3">Mar</option>
+              <option value="4">Apr</option>
+              <option value="5">May</option>
+              <option value="6">Jun</option>
+              <option value="7">Jul</option>
+              <option value="8">Aug</option>
+              <option value="9">Sep</option>
+              <option value="10">Oct</option>
+              <option value="11">Nov</option>
+              <option value="12">Dec</option>
+            </select>
+          </div>
+
+          <!-- Behavioural -->
+          <div class="form-group">
+            <label for="account_age_days">Account Age (days)</label>
+            <input type="number" id="account_age_days" name="account_age_days" min="0" />
+          </div>
+
+          <div class="form-group">
+            <label for="tx_velocity">Tx Velocity (tx/day)</label>
+            <input type="number" id="tx_velocity" name="tx_velocity" min="0" step="0.01" />
+          </div>
+
+          <div class="form-group">
+            <label for="num_failed_tx">Failed Transactions</label>
+            <input type="number" id="num_failed_tx" name="num_failed_tx" min="0" />
+          </div>
+
+          <div class="form-group">
+            <label for="credit_score">Credit Score</label>
+            <input type="number" id="credit_score" name="credit_score" min="0" max="900" />
+          </div>
+
+          <!-- Network & Device -->
+          <div class="form-group">
+            <label for="device_type">Device Type</label>
+            <select id="device_type" name="device_type">
+              <option value="" disabled selected>Select device</option>
+              <option value="mobile">Mobile</option>
+              <option value="desktop">Desktop</option>
+              <option value="tablet">Tablet</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="browser">Browser</label>
+            <select id="browser" name="browser">
+              <option value="" disabled selected>Select browser</option>
+              <option value="chrome">Chrome</option>
+              <option value="firefox">Firefox</option>
+              <option value="safari">Safari</option>
+              <option value="edge">Edge</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="ip_country">IP Country</label>
+            <input type="text" id="ip_country" name="ip_country" placeholder="e.g. IN, US, GB" />
+          </div>
+
+          <div class="form-group">
+            <label for="vpn_detected">VPN Detected</label>
+            <select id="vpn_detected" name="vpn_detected">
+              <option value="0" selected>No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+
+          <!-- Text-derived summary -->
+          <div class="form-group full-width">
+            <label for="desc_summary">Description Summary (optional)</label>
+            <textarea
+              id="desc_summary"
+              name="desc_summary"
+              rows="2"
+              placeholder="Short description."
+            ></textarea>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-actions full-width">
+            <button type="submit" class="btn primary">Run Fraud Check</button>
+            <button type="reset" class="btn outline" id="reset-btn">Clear Form</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Prediction Result Panel -->
+      <div class="result-panel" id="result-panel">
+        <div class="result-header">
+          <span class="result-chip">Prediction</span>
+          <span class="result-model-source" id="result-source">Source: –</span>
+        </div>
+
+        <p class="result-label">Status</p>
+        <p class="result-status" id="result-status">No prediction yet.</p>
+
+        <p class="result-label">Fraud Probability</p>
+        <p class="result-score" id="result-score">–</p>
+
+        <p class="result-label">Notes</p>
+        <p class="result-note" id="result-note">
+          Submit a transaction to see the predicted fraud risk.
+        </p>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="card stats-section" id="stats-section">
+      <div class="card-header">
+        <h2>Session Log</h2>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Amount</th>
+              <th>Country</th>
+              <th>VPN</th>
+              <th>Risk</th>
+              <th>Label</th>
+            </tr>
+          </thead>
+          <tbody id="history-body">
+            <!-- JS appends rows here -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="card about-section" id="about-section">
+      <div class="card-header">
+        <h2>About This Interface</h2>
+      </div>
+      <p>
+        This UI is for the <strong>Manthan AI 2025</strong> e-commerce fraud detection problem.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>FraudGuard AI &copy; 2025 · Manthan AI Hackathon UI</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
